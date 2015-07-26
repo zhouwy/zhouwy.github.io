@@ -37,16 +37,73 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="title: game_qihang_01date: 2015-07-26 18:41:05description: 生命在于折腾">
+<meta name="description" content="&amp;lt;!Doctype html&amp;gt;
+
+	
+	
+		div.mainbody{
+		  width:35%;
+		  margin: 0 auto;
+		  text-align:center;
+		}
+		h1{
+		  color:blue;
+		}
+		ul{
+
+		  margin:0 auto;
+		}
+		li{
+		  list-style: none;
+		  float:left;">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zhouwy's Blog">
 <meta property="og:url" content="http://zhouwy.com/game-qihang-01/index.html">
 <meta property="og:site_name" content="Zhouwy's Blog">
-<meta property="og:description" content="title: game_qihang_01date: 2015-07-26 18:41:05description: 生命在于折腾">
-<meta property="og:updated_time" content="2015-07-26T11:09:13.071Z">
+<meta property="og:description" content="&amp;lt;!Doctype html&amp;gt;
+
+	
+	
+		div.mainbody{
+		  width:35%;
+		  margin: 0 auto;
+		  text-align:center;
+		}
+		h1{
+		  color:blue;
+		}
+		ul{
+
+		  margin:0 auto;
+		}
+		li{
+		  list-style: none;
+		  float:left;">
+<meta property="og:image" content="https://github.com/baidu-ife/ife/blob/master/2015_summer/asset/jiandao.jpg?raw=true">
+<meta property="og:image" content="https://github.com/baidu-ife/ife/blob/master/2015_summer/asset/shitou.jpg?raw=true">
+<meta property="og:image" content="https://github.com/baidu-ife/ife/blob/master/2015_summer/asset/bu.jpg?raw=true">
+<meta property="og:updated_time" content="2015-07-26T11:32:03.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zhouwy's Blog">
-<meta name="twitter:description" content="title: game_qihang_01date: 2015-07-26 18:41:05description: 生命在于折腾">
+<meta name="twitter:description" content="&amp;lt;!Doctype html&amp;gt;
+
+	
+	
+		div.mainbody{
+		  width:35%;
+		  margin: 0 auto;
+		  text-align:center;
+		}
+		h1{
+		  color:blue;
+		}
+		ul{
+
+		  margin:0 auto;
+		}
+		li{
+		  list-style: none;
+		  float:left;">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -148,7 +205,136 @@
   <div id="posts" class="posts-expand">
     
     
-      <p>title: game_qihang_01<br>date: 2015-07-26 18:41:05<br>description: 生命在于折腾</p>
+      <!Doctype html>
+<head>
+	<meta charset="UTF-8">
+	<style type="text/css">
+		div.mainbody{
+		  width:35%;
+		  margin: 0 auto;
+		  text-align:center;
+		}
+		h1{
+		  color:blue;
+		}
+		ul{
+
+		  margin:0 auto;
+		}
+		li{
+		  list-style: none;
+		  float:left;
+		}
+		#usrresult,#comresult{
+		  display:block;
+		}
+	</style>
+</head>
+<body>
+	<div class="mainbody">
+		<h1>剪刀石头布</h1>
+		<h2>请单击选择出拳</h2>
+		<ul>
+			<li><img src="https://github.com/baidu-ife/ife/blob/master/2015_summer/asset/jiandao.jpg?raw=true" id="jiandao"></li>
+			<li><img src="https://github.com/baidu-ife/ife/blob/master/2015_summer/asset/shitou.jpg?raw=true" id="shitou"></li>
+			<li><img src="https://github.com/baidu-ife/ife/blob/master/2015_summer/asset/bu.jpg?raw=true" id="bu"></li>
+		</ul>
+		
+  		
+	</div>
+	
+	<div class="mainbody">
+		<ul>
+			<li><img id="usrresult"></li>
+			<li>
+				<span id="gameresult"></span>
+				<p>游戏总次数：<em id="sum"></em> <br> 赢的次数：<em id="win"></em></p>
+			</li>
+			<li><img id="comresult"></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		window.onload=function(){
+		  var gamesum=0;
+		  var winsum=0;
+		  var result=null;
+		  var jiandao=document.getElementById("jiandao");
+		  var shitou=document.getElementById("shitou");
+		  var bu=document.getElementById("bu");
+		  var usrresult=document.getElementById("usrresult");
+		  var comresult=document.getElementById("comresult");
+		  var game=function(event){
+		    var computer;
+		    var user;
+		    if(event.target===jiandao){
+		    	user="jiandao";
+		    }else if(event.target===shitou){
+		    	user="shitou";
+		    }else{
+		    	user="bu";
+		    }
+		    var rand=Math.random();
+		    if(rand<0.33){
+		    	computer="jiandao";
+		    	comresult.src=jiandao.src;
+		    }else if(rand<0.66){
+		    	computer="shitou";
+		    	comresult.src=shitou.src;
+		    }else{
+		    	computer="bu";
+		    	comresult.src=bu.src;
+		    }
+
+		    // 比较
+		    if(user==="jiandao"){
+		    	usrresult.src=jiandao.src;
+		    	if(computer==="jiandao"){
+		    		result="平局!";
+		    	}else if(computer==="shitou"){
+		    		result="你输了!";
+		    	}else{
+		    		result="你赢了!";
+		    	}
+		    }else if(user==="shitou"){
+		    	usrresult.src=shitou.src;
+		    	if(computer==="jiandao"){
+		    		result="你赢了!";
+		    	}else if(computer==="shitou"){
+		    		result="平局！";
+		    	}else{
+		    		result="你输了!";
+		    	}
+		    }else{
+		    	usrresult.src=bu.src;
+		    	if(computer==="jiandao"){
+		    		result="你输了!";
+		    	}else if(computer==="shitou"){
+		    		result="你赢了!";
+		    	}else{
+		    		result="平局！";
+		    	}
+		    }
+		    gamesum=gamesum+1;
+		    if(result=="你赢了!"){
+		    	winsum=winsum+1;
+		    }
+
+		  document.getElementById("gameresult").innerHTML=result;
+		  document.getElementById("sum").innerHTML=gamesum;
+		  document.getElementById("win").innerHTML=winsum;
+		  }
+
+
+		  jiandao.onclick=game;
+		  shitou.onclick=game;
+		  bu.onclick=game;
+		};
+
+
+
+
+	</script>
+</body>
 
     
   </div>
