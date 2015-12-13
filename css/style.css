@@ -88,7 +88,7 @@ a:hover {
   }
 }
 #main-col {
-  width: 760px;
+  width: 810px;
 }
 @media screen and (max-width: 1260px) {
   #main-col {
@@ -130,6 +130,7 @@ a:hover {
   -webkit-border-radius: 50%;
   border-radius: 50%;
   height: 5em;
+  width: 5em;
   float: left;
   margin: 0 0.8em;
   -webkit-transition: height 0.3s, -webkit-transform 1s;
@@ -696,7 +697,7 @@ article footer .counter:before {
   left: 2px;
 }
 #sidebar {
-  width: 270px;
+  width: 220px;
   line-height: 1.8em;
 }
 @media screen and (max-width: 900px) {
