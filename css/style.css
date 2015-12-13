@@ -129,7 +129,7 @@ a:hover {
 #header .header-content .col-one img {
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  width: 5em;
+  height: 5em;
   float: left;
   margin: 0 0.8em;
   -webkit-transition: height 0.3s, -webkit-transform 1s;
