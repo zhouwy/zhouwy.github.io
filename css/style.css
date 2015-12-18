@@ -1292,8 +1292,12 @@ pre .deletion {
   margin-bottom: 5px;
   clear: both;
 }
+.gallery ul {
+  list-style-type: none;
+  overflow: hidden;
+}
 .gallery ul li {
-  margin: 10px 20px;
+  margin: 10px 10px;
   -webkit-box-shadow: 1px 1px 6px;
   box-shadow: 1px 1px 6px;
   width: 300px;
@@ -1305,7 +1309,11 @@ pre .deletion {
   height: auto;
 }
 .gallery ul li:hover img {
-  width: 300px;
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 .gallery ul li a {
   text-decoration: none;
@@ -1324,7 +1332,7 @@ pre .deletion {
   text-overflow: ellipsis;
 }
 .gallery ul li img {
-  width: 280px;
+  width: 300px;
   display: block;
   margin: 0 auto;
 }
