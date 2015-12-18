@@ -1292,47 +1292,52 @@ pre .deletion {
   margin-bottom: 5px;
   clear: both;
 }
-.gallery ul {
-  list-style-type: none;
-  overflow: hidden;
+.gallery .gallery-set {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 3%;
+  -moz-column-gap: 3%;
+  column-gap: 3%;
+  -webkit-column-gap: 3%;
+  -webkit-column-width: 30%;
+  -moz-column-width: 30%;
+  column-width: 30%;
+  -webkit-column-width: 30%;
 }
-.gallery ul li {
-  margin: 10px 10px;
+.gallery .gallery-set .item {
+  margin-bottom: 30px;
   -webkit-box-shadow: 1px 1px 6px;
   box-shadow: 1px 1px 6px;
-  width: 300px;
-  height: 240px;
   overflow: hidden;
-  float: left;
 }
-.gallery ul li:hover {
+.gallery .gallery-set .item:hover {
   height: auto;
 }
-.gallery ul li:hover img {
+.gallery .gallery-set .item:hover img {
   -webkit-transform: scale(1.1);
   -moz-transform: scale(1.1);
   -o-transform: scale(1.1);
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
-.gallery ul li a {
+.gallery .gallery-set .item a {
   text-decoration: none;
 }
-.gallery ul li .dt {
+.gallery .gallery-set .item .dt {
   padding: 5px;
   text-align: left;
   font-size: 20px;
   font-family: serif;
 }
-.gallery ul li .dd {
+.gallery .gallery-set .item .dd {
   padding: 5px;
   line-height: 25px;
   text-indent: 20px;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
 }
-.gallery ul li img {
-  width: 300px;
+.gallery .gallery-set .item img {
   display: block;
-  margin: 0 auto;
 }
