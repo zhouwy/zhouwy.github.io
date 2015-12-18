@@ -1308,9 +1308,10 @@ pre .deletion {
 }
 .gallery .gallery-set .item {
   margin-bottom: 30px;
+  margin-right: 6px;
+  overflow: hidden;
   -webkit-box-shadow: 1px 1px 6px;
   box-shadow: 1px 1px 6px;
-  overflow: hidden;
 }
 .gallery .gallery-set .item:hover {
   height: auto;
