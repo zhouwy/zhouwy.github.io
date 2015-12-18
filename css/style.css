@@ -1322,6 +1322,9 @@ pre .deletion {
   -ms-transform: scale(1.1);
   transform: scale(1.1);
 }
+.gallery .gallery-set .item:hover .dd {
+  display: block;
+}
 .gallery .gallery-set .item a {
   text-decoration: none;
 }
@@ -1332,12 +1335,17 @@ pre .deletion {
   font-family: serif;
 }
 .gallery .gallery-set .item .dd {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   padding: 5px;
   line-height: 25px;
   text-indent: 20px;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
 }
 .gallery .gallery-set .item img {
   display: block;
+  width: 100%;
 }
