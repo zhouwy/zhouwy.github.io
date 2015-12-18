@@ -1300,11 +1300,11 @@ pre .deletion {
   -webkit-column-gap: 3%;
   -moz-column-gap: 3%;
   column-gap: 3%;
-  -webkit-column-gap: 3%;
+  -webkit-column-gap: 4%;
   -webkit-column-width: 30%;
   -moz-column-width: 30%;
   column-width: 30%;
-  -webkit-column-width: 30%;
+  -webkit-column-width: 28%;
 }
 .gallery .gallery-set .item {
   margin-bottom: 30px;
