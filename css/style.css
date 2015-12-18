@@ -1292,3 +1292,39 @@ pre .deletion {
   margin-bottom: 5px;
   clear: both;
 }
+.gallery ul li {
+  margin: 10px 20px;
+  -webkit-box-shadow: 1px 1px 6px;
+  box-shadow: 1px 1px 6px;
+  width: 300px;
+  height: 240px;
+  overflow: hidden;
+  float: left;
+}
+.gallery ul li:hover {
+  height: auto;
+}
+.gallery ul li:hover img {
+  width: 300px;
+}
+.gallery ul li a {
+  text-decoration: none;
+}
+.gallery ul li .dt {
+  padding: 5px;
+  text-align: left;
+  font-size: 20px;
+  font-family: serif;
+}
+.gallery ul li .dd {
+  padding: 5px;
+  line-height: 25px;
+  text-indent: 20px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.gallery ul li img {
+  width: 280px;
+  display: block;
+  margin: 0 auto;
+}
