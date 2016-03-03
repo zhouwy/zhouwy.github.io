@@ -3,13 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>test | Zhouwy&#39;s Blog</title>
+  <title>精确定位参数学习 | Zhouwy&#39;s Blog</title>
   <meta name="author" content="Zhou Wenyuan">
+  
+  <meta name="description" content="事件的各种坐标1event.clientX	event.clientY
+鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性
+1event.pageX 	event.pageY
+类似于event.clientX、event.clie">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="test"/>
+  <meta property="og:title" content="精确定位参数学习"/>
   <meta property="og:site_name" content="Zhouwy&#39;s Blog"/>
 
   
@@ -73,10 +78,10 @@
   <div class="post-content">
     <header>
         <div class="icon"></div>
-        <time datetime="2016-01-08T10:41:14.000Z"><a href="/2016/01/08/test/">2016-01-08</a></time>
+        <time datetime="2016-03-03T14:02:21.000Z"><a href="/2016/03/03/precise-positioning/">2016-03-03</a></time>
         
   
-    <h1 class="title">test</h1>
+    <h1 class="title">精确定位参数学习</h1>
   
 
         
@@ -86,10 +91,25 @@
       
         <div id="toc" class="toc-article">
 	<div class="toc-title">目录</div>
-	
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的各种坐标"><span class="toc-text">事件的各种坐标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的长宽、距离"><span class="toc-text">元素的长宽、距离</span></a></li></ol>
 </div>
       
-        
+        <h3 id="事件的各种坐标">事件的各种坐标</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.clientX	event.clientY</span><br></pre></td></tr></table></figure>
+<p>鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.pageX 	event.pageY</span><br></pre></td></tr></table></figure>
+<p>类似于event.clientX、event.clientY，但它们使用的是文档坐标而非窗口坐标。这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.screenX	event.screenY</span><br></pre></td></tr></table></figure>
+<p>鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.offsetX	event.offsetY</span><br></pre></td></tr></table></figure>
+<p>鼠标相对于事件源元素（srcElement）的X,Y坐标，只有IE事件有这2个属性，标准事件没有对应的属性。<br>IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder,可能出现负值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.layerX	event.layerY</span><br></pre></td></tr></table></figure>
+<p>FF特有,鼠标相比较于当前坐标系的位置,即如果触发元素没有设置绝对定位或相对定位,以页面为参考点,如果有,将改变参考坐标系,从触发元素盒子模型的border区域的左上角为参考点<br>也就是当触发元素设置了相对或者绝对定位后,layerX和offsetX就幸福地生活在一起,几乎相等,唯一不同就是一个从border为参考点,一个以内容为参考点,FF从border开始.</p>
+<p>只有clientX和screenX 皆大欢喜是W3C标准.其他的,都纠结了.<br>最给力的是,chrome和safari一条龙通杀!完全支持所有属性.其中(offsetX和layerX都是以border为参考点)…</p>
+<h3 id="元素的长宽、距离">元素的长宽、距离</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollHeight	scrollWidth	scrollLeft	scrollTop</span><br></pre></td></tr></table></figure>
+<p>scrollHeight: 获取对象的滚动高度<br>scrollWidth:获取对象的滚动宽度<br>scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离<br>scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">offsetHeight	offsetWidth	offsetLeft	offsetTop</span><br></pre></td></tr></table></figure>
+<p>offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度<br>offsetWidth:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的宽度<br>offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置<br>offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置 </p>
+
       
     </div>
     <footer>
@@ -114,8 +134,8 @@
 <section id="relate">
 	<script type="text/javascript" id="wumiiRelatedItems"></script>
 	<script type="text/javascript">
-	    var wumiiPermaLink = "http://zhouwy.com/2016/01/08/test/"; //请用代码生成文章永久的链接
-	    var wumiiTitle = "test"; //请用代码生成文章标题
+	    var wumiiPermaLink = "http://zhouwy.com/2016/03/03/precise-positioning/"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "精确定位参数学习"; //请用代码生成文章标题
 	    var wumiiTags = "[object Object]"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
 	    var wumiiCategories = "[object Object]"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
 	    var wumiiSitePrefix = "Your site url";
@@ -133,7 +153,7 @@
 
 
     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2016/01/08/test/" data-title="test" data-url="http://zhouwy.com/2016/01/08/test/"></div>
+<div class="ds-thread" data-thread-key="2016/03/03/precise-positioning/" data-title="精确定位参数学习" data-url="http://zhouwy.com/2016/03/03/precise-positioning/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -163,7 +183,7 @@ var duoshuoQuery = {short_name:"zhouwy"};
   
   <div class="widget tag">
     <h3 class="title">归档</h3>
-	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">2016年01月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li></ul>
+	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">2015年01月</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
