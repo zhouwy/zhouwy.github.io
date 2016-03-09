@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Zhouwy&#39;s Blog</title>
+  <title>跨域的三种方法 | Zhouwy&#39;s Blog</title>
   <meta name="author" content="Zhou Wenyuan">
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta name="description" content="由于Ajax受同源策略的限制，因此，要实现跨域的资源访问，需要采取其他的方法。只要是协议、域名、端口有任何一个不同，都被当成是不同的域。我主要整理了三个比较常见的跨域方法。
+1.跨源资源共享原理：使用自定义的HTTP头部让浏览器与服务器进行沟通。发送Request附加Origin头部，以便服务器根据">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Hello World"/>
+  <meta property="og:title" content="跨域的三种方法"/>
   <meta property="og:site_name" content="Zhouwy&#39;s Blog"/>
 
   
@@ -75,10 +76,10 @@
   <div class="post-content">
     <header>
         <div class="icon"></div>
-        <time datetime="2015-07-26T06:51:29.866Z"><a href="/2015/07/26/hello-world/">2015-07-26</a></time>
+        <time datetime="2016-03-06T14:39:56.000Z"><a href="/2016/03/06/cross-origin/">2016-03-06</a></time>
         
   
-    <h1 class="title">Hello World</h1>
+    <h1 class="title">跨域的三种方法</h1>
   
 
         
@@ -88,18 +89,48 @@
       
         <div id="toc" class="toc-article">
 	<div class="toc-title">目录</div>
-	<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-跨源资源共享"><span class="toc-text">1.跨源资源共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSONP"><span class="toc-text">2.JSONP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Web_Sockets"><span class="toc-text">3.Web Sockets</span></a></li></ol>
 </div>
       
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>由于Ajax受同源策略的限制，因此，要实现跨域的资源访问，需要采取其他的方法。<br>只要是协议、域名、端口有任何一个不同，都被当成是不同的域。<br>我主要整理了三个比较常见的跨域方法。</p>
+<h3 id="1-跨源资源共享">1.跨源资源共享</h3><p>原理：使用自定义的HTTP头部让浏览器与服务器进行沟通。发送Request附加Origin头部，以便服务器根据这个头部信息来决定是否给予响应。如果服务器认为这个请求可以接受，就在Access-Control-Allow-Origin头部回发相同的源信息。</p>
+<p>通过 onload  onerror等事件来接收响应<br>具体实现：</p>
+<pre><code>function createCORSRequest(<span class="keyword">method</span>, url) {
+  <span class="keyword">var</span> xhr = new <span class="type">XMLHttpRequest</span>();
+  <span class="keyword">if</span> (<span class="string">"withCredentials"</span> <span class="keyword">in</span> xhr) {
+    // 此时即支持<span class="type">CORS</span>的情况
+    // 检查<span class="type">XMLHttpRequest</span>对象是否有“withCredentials”属性
+    // “withCredentials”仅存在于<span class="type">XMLHTTPRequest2</span>对象里
+    xhr.open(<span class="keyword">method</span>, url, <span class="literal">true</span>);
+
+  } <span class="keyword">else</span> <span class="keyword">if</span> (typeof!= <span class="string">"undefined"</span>) {
+
+    // 否则检查是否支持<span class="type">XDomainRequest</span>，<span class="type">IE8</span>和<span class="type">IE9</span>支持
+    // <span class="type">XDomainRequest</span>仅存在于<span class="type">IE</span>中，是<span class="type">IE</span>用于支持<span class="type">CORS</span>请求的方式
+    xhr = new <span class="type">XDomainRequest</span>();
+    xhr.open(<span class="keyword">method</span>, url);
+
+  } <span class="keyword">else</span> {
+
+    // 否则，浏览器不支持<span class="type">CORS</span>
+    xhr = null;
+
+  }
+  <span class="keyword">return</span> xhr;
+}
+
+<span class="keyword">var</span> xhr = createCORSRequest('<span class="type">GET</span>', url);
+<span class="keyword">if</span> (!xhr) {
+  throw new <span class="type">Error</span>('<span class="type">CORS</span> <span class="keyword">not</span> supported');
+}
+</code></pre><p>优点：有好的错误处理方法，同时支持各种类型的HTTP请求</p>
+<p>缺点：老的浏览器不支持</p>
+<h3 id="2-JSONP">2.JSONP</h3><p>原理：<code>&lt;script&gt;</code>元素有能力不受限制地从其他域加载资源<br>首先在客户端注册一个callback, 然后把callback的名字传给服务器。<br>此时，服务器先生成 json 数据。<br>然后以 javascript 语法的方式，生成一个function , function 名字就是传递上来的参数 jsonp.<br>最后将 json 数据直接以入参的方式，放置到 function 中，这样就生成了一段 js 语法的文档，返回给客户端。<br>客户端浏览器，解析script标签，并执行返回的 javascript 文档，此时数据作为参数，传入到了客户端预先定义好的 callback 函数里.（动态执行回调函数）</p>
+<p>优点：<br>1.不受同源策略的限制<br>2.兼容性好，在很多古老的浏览器也可以实现</p>
+<p>缺点：<br>1.没有关于 JSONP 调用的错误处理。如果动态脚本插入有效，就执行调用；如果无效，就静默失败<br>2.被不信任的服务使用时会很危险。因为 JSONP 服务返回打包在函数调用中的 JSON 响应，而函数调用是由浏览器执行的，这使宿主 Web 应用程序更容易受到各类攻击。<br>3.只能实现GET请求</p>
+<h3 id="3-Web_Sockets">3.Web Sockets</h3><p>原理：WebSocket API是下一代客户端-服务器的异步通信方法。该通信取代了单个的TCP套接字，使用ws或wss协议，可用于任意的客户端和服务器程序。WebSocket目前由W3C进行标准化。WebSocket已经受到Firefox 4、Chrome 4、Opera 10.70以及Safari 5等浏览器的支持。</p>
+<p>WebSocket API最伟大之处在于服务器和客户端可以在给定的时间范围内的任意时刻，相互推送信息。WebSocket并不限于以Ajax(或XHR)方式通信，因为Ajax技术需要客户端发起请求，而WebSocket服务器和客户端可以彼此相互推送信息；XHR受到域的限制，而WebSocket允许跨域通信。</p>
+<p>优点：能够与服务器进行全双工、双向通信。</p>
 
       
     </div>
@@ -125,8 +156,8 @@
 <section id="relate">
 	<script type="text/javascript" id="wumiiRelatedItems"></script>
 	<script type="text/javascript">
-	    var wumiiPermaLink = "http://zhouwy.com/2015/07/26/hello-world/"; //请用代码生成文章永久的链接
-	    var wumiiTitle = "Hello World"; //请用代码生成文章标题
+	    var wumiiPermaLink = "http://zhouwy.com/2016/03/06/cross-origin/"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "跨域的三种方法"; //请用代码生成文章标题
 	    var wumiiTags = "[object Object]"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
 	    var wumiiCategories = "[object Object]"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
 	    var wumiiSitePrefix = "Your site url";
@@ -144,7 +175,7 @@
 
 
     <!-- 多说评论框 start -->
-<div class="ds-thread" data-thread-key="2015/07/26/hello-world/" data-title="Hello World" data-url="http://zhouwy.com/2015/07/26/hello-world/"></div>
+<div class="ds-thread" data-thread-key="2016/03/06/cross-origin/" data-title="跨域的三种方法" data-url="http://zhouwy.com/2016/03/06/cross-origin/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

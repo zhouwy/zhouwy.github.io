@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>异步加载和延迟加载 | Zhouwy&#39;s Blog</title>
+  <meta name="author" content="Zhou Wenyuan">
+  
+  <meta name="description" content="1.同步加载同步模式，又称阻塞模式，会阻止浏览器的后续处理，停止了后续的解析，因此停止了后续的文件加载（如图像）、渲染、代码执行。 js 之所以要同步执行，是因为 js 中可能有输出 document 内容、修改dom、重定向等行为，所以默认同步执行才是安全的。以前的一般建议是把&amp;lt;script">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="异步加载和延迟加载"/>
+  <meta property="og:site_name" content="Zhouwy&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Zhouwy&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <meta name="wumiiVerification" content="fb50a101-84fe-4ca2-91a7-ae8cf792978b" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="wumiiVerification" content="d73b5866-c390-4156-a4dd-51b526b5335e" />
+</head>
+
+<body>
+  <header id="header" class="inner"><div class= "header-content">
+	<div class = "alignleft col-one">
+		
+			<img src = "/assets/img/avatar/avatar.jpeg">
+		
+		<div class="header-div">
+		    <h1><a href="/">Zhouwy&#39;s Blog</a></h1>
+		    <h2><a href="/">小小前端攻城狮</a></h2>
+		</div>
+	</div>
+	<div class = "alignright col-two">
+		
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class= "header-nav">
+	<div id="main-nav" class="alignleft">
+	    
+	      <a href="/">首页</a>
+	    
+	      <a href="/gallery">DEMO</a>
+	    
+	      <a href="/archives">归档</a>
+	    
+	      <a href="/index.html#categories">分类</a>
+	    
+	      <a href="/resume">关于我</a>
+	    
+	</div>
+	<div id="sub-nav" class="alignright">
+	    
+	      <a href="/atom.xml">订阅</a>
+	    
+	      <a href="/customization">留言</a>
+	    
+	</div>
+	<div class="clearfix"></div>
+</div>
+</header>
+  
+      <div id="content" class="inner">
+  		<div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+        <div class="icon"></div>
+        <time datetime="2016-03-09T05:44:34.000Z"><a href="/2016/03/09/Asynchronous-Script-Loading/">2016-03-09</a></time>
+        
+  
+    <h1 class="title">异步加载和延迟加载</h1>
+  
+
+        
+    </header>
+
+    <div class="entry">
+      
+        <div id="toc" class="toc-article">
+	<div class="toc-title">目录</div>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-同步加载"><span class="toc-text">1.同步加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-异步加载"><span class="toc-text">2.异步加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_实现方法："><span class="toc-text">2.1 实现方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_问题："><span class="toc-text">2.2 问题：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-延迟加载"><span class="toc-text">3.延迟加载</span></a></li></ol>
+</div>
+      
+        <h3 id="1-同步加载">1.同步加载</h3><p>同步模式，又称阻塞模式，会阻止浏览器的后续处理，停止了后续的解析，因此停止了后续的文件加载（如图像）、渲染、代码执行。<br> js 之所以要同步执行，是因为 js 中可能有输出 document 内容、修改dom、重定向等行为，所以默认同步执行才是安全的。<br>以前的一般建议是把<code>&lt;script</code>&gt;放在页面末尾<code>&lt;/body&gt;</code>之前，这样尽可能减少这种阻塞行为，而先让页面展示出来。</p>
+<h3 id="2-异步加载">2.异步加载</h3><p>异步加载又叫非阻塞，浏览器在下载执行 js 同时，还会继续进行后续页面的处理。</p>
+<h4 id="2-1_实现方法：">2.1 实现方法：</h4><p>（常见方法和jquery实现defered对象）</p>
+<p>（1）  动态创建<code>&lt;script&gt;</code>标签并插入到document中<br>任何以添加 script 节点(例如 appendChild(scriptNode) ) 的方式引入的js文件都是异步执行的 (scriptNode 需要插入document中，只创建节点和设置 src 是不会加载 js 文件的，这跟 img 的预加载不能类比 ) </p>
+<pre><code>var script = document.createElement<span class="params">(<span class="string">"script"</span>)</span>; 
+script.setAttribute<span class="params">(<span class="string">"src"</span>,<span class="string">"xx.js"</span>)</span>; 
+documenrt.getElementsByTagName<span class="params">(<span class="string">"head"</span>)</span>[<span class="number">0</span>].appendChild<span class="params">(script)</span>; 
+</code></pre><p>（2） defer属性<br>defer属性声明这个脚本中将不会有 document.write 或 dom 修改。<br>浏览器将会并行下载 file.js 和其它有 defer 属性的script，而不会阻塞页面后续处理。<br>执行要在所有元素解析完成之后，DOMContentLoaded 事件触发之前完成。<br>defer属性在IE 4.0中就实现了，超过13年了！Firefox 从 3.5 开始支持defer属性 。<br>注：所有的defer 脚本保证是按顺序依次执行的。</p>
+<p>（3）  async属性<br>async属性是HTML5新增的。作用和defer类似，但是它将在下载后尽快执行，不能保证脚本会按顺序执行。它们将在onload 事件之前完成。<br>Firefox 3.6、Opera 10.5、IE 9 和 最新的Chrome 和 Safari 都支持 async 属性。可以同时使用 async 和 defer，这样IE 4之后的所有 IE 都支持异步加载。</p>
+<blockquote><br><img src="\assets\img\post\deferAndAsync.jpg" alt="defer和async属性的比较"><br>蓝色线代表网络读取，红色线代表执行时间，这俩都是针对脚本的；绿色线代表 HTML 解析。<br><br>此图告诉我们以下几个要点：<br><br>1.defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）<br>2.它俩的差别在于脚本下载完之后何时执行，显然 defer 是最接近我们对于应用脚本加载和执行的要求的<br>3.关于 defer，此图未尽之处在于它是按照加载顺序执行脚本的，这一点要善加利用<br>4.async 则是一个乱序执行的主，反正对它来说脚本的加载和执行是紧紧挨着的，所以不管你声明的顺序如何，只要它加载完了就会立刻执行<br>5.仔细想想，async 对于应用脚本的用处不大，因为它完全不考虑依赖（哪怕是最低级的顺序执行），不过它对于那些可以不依赖任何脚本或不被任何脚本依赖的脚本来说却是非常合适的，最典型的例子：Google Analytics<br><a href="https://segmentfault.com/q/1010000000640869" target="_blank" rel="external">参考链接：defer和async的区别</a><br></blockquote>
+
+<p>（4）  创建并插入一个iframe元素，让其异步执行 js 。</p>
+<pre><code><span class="reserved">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>); 
+<span class="built_in">document</span>.body.appendChild(iframe); 
+<span class="reserved">var</span> doc = iframe.contentWindow.<span class="built_in">document</span>; 
+doc.open().write(<span class="string">'&lt;body onload="insertJS()"&gt;'</span>); 
+doc.close();
+</code></pre><p>（5）  通过 ajax 获取js的内容，然后 eval 执行。</p>
+<pre><code><span class="keyword">var</span> xhrObj = getXHRObject(); 
+ xhrObj.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{  
+    <span class="keyword">if</span> ( xhrObj.readyState != <span class="number">4</span> ) <span class="keyword">return</span>; 
+    <span class="built_in">eval</span>(xhrObj.responseText); 
+}; 
+xhrObj.open(<span class="string">'GET'</span>, <span class="string">'A.js'</span>, <span class="literal">true</span>); 
+xhrObj.send(<span class="string">''</span>);
+</code></pre><p>（6）  jQuery实现：defered对象</p>
+<h4 id="2-2_问题：">2.2 问题：</h4><h3 id="3-延迟加载">3.延迟加载</h3><p>延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的。延迟加载就是一开始并不加载这些暂时不用的js，而是在需要的时候或稍后再通过js 的控制来异步加载。<br>也就是将 js 切分成许多模块，页面初始化时只加载需要立即执行的 js ，然后其它 js 的加载延迟到第一次需要用到的时候再加载。<br>特别是页面有大量不同的模块组成，很多可能暂时不用或根本就没用到。<br>就像图片的延迟加载，在图片出现在可视区域内时（在滚动条下拉）才加载显示图片。</p>
+
+      
+    </div>
+    <footer>
+<!--        -->
+        
+        
+        <div class = "counter">
+  <span id="busuanzi_container_page_pv" style="display:none">
+      总访问&nbsp<span id="busuanzi_value_page_pv"></span>&nbsp次
+  </span>
+</div>
+        
+  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a><a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+  <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<!--        -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+<section id="relate">
+	<script type="text/javascript" id="wumiiRelatedItems"></script>
+	<script type="text/javascript">
+	    var wumiiPermaLink = "http://zhouwy.com/2016/03/09/Asynchronous-Script-Loading/"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "异步加载和延迟加载"; //请用代码生成文章标题
+	    var wumiiTags = "[object Object]"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+	    var wumiiCategories = "[object Object]"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
+	    var wumiiSitePrefix = "Your site url";
+	    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
+	</script>
+	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+	<a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+	    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+	</a>
+</section>
+
+
+<section id="comment">
+<!--   <h1 class="title">留言</h1> -->
+
+
+    <!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="2016/03/09/Asynchronous-Script-Loading/" data-title="异步加载和延迟加载" data-url="http://zhouwy.com/2016/03/09/Asynchronous-Script-Loading/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"zhouwy"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+
+  
+</section>
+
+
+
+</div></div>
+  		<aside id="sidebar" class="alignright">
+   
+
+
+  
+  <div class="widget tag">
+    <h3 class="title">归档</h3>
+	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
+
+  
+
+  
+</aside>
+           <div class="clearfix"></div>
+      </div>
+  	
+   <footer id="footer" class="inner"><div class="alignleft">
+
+  &copy; 2016 Zhou Wenyuan
+  
+</div>
+<div class="alignright">
+  Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme
+  <a href="https://github.com/pengloo53/Hexo-theme-light_cn">light_cn</a>
+</div>
+
+<div class="visit">
+	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+</div>
+
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<!-- 添加『不蒜子』计数服务 -->
+<script async src="http://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?dce613887849d114b64d37be797bf201";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+<div id="toTop">
+	<a href="#">▲</a>
+	<a href="#footer">▼</a>
+</div>
+<!--  -->
+
+
+</body>
+</html>

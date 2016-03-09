@@ -6,10 +6,9 @@
   <title>精确定位参数学习 | Zhouwy&#39;s Blog</title>
   <meta name="author" content="Zhou Wenyuan">
   
-  <meta name="description" content="事件的各种坐标1event.clientX	event.clientY
-鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性
-1event.pageX 	event.pageY
-类似于event.clientX、event.clie">
+  <meta name="description" content="去年暑假在做百度前端技术学院的界面拖拽功能的时候用到了pageX、offsetX等属性，才发现自己在定位的各种参数的掌握上简直稀碎，因此就系统地整理一下，加深印象。
+1.事件的各种坐标event.clientX    event.clientY
+鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,24 +90,25 @@
       
         <div id="toc" class="toc-article">
 	<div class="toc-title">目录</div>
-	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的各种坐标"><span class="toc-text">事件的各种坐标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的长宽、距离"><span class="toc-text">元素的长宽、距离</span></a></li></ol>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-事件的各种坐标"><span class="toc-text">1.事件的各种坐标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-元素的长宽、距离"><span class="toc-text">2.元素的长宽、距离</span></a></li></ol>
 </div>
       
-        <h3 id="事件的各种坐标">事件的各种坐标</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.clientX	event.clientY</span><br></pre></td></tr></table></figure>
-<p>鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.pageX 	event.pageY</span><br></pre></td></tr></table></figure>
-<p>类似于event.clientX、event.clientY，但它们使用的是文档坐标而非窗口坐标。这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.screenX	event.screenY</span><br></pre></td></tr></table></figure>
-<p>鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.offsetX	event.offsetY</span><br></pre></td></tr></table></figure>
-<p>鼠标相对于事件源元素（srcElement）的X,Y坐标，只有IE事件有这2个属性，标准事件没有对应的属性。<br>IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder,可能出现负值</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.layerX	event.layerY</span><br></pre></td></tr></table></figure>
-<p>FF特有,鼠标相比较于当前坐标系的位置,即如果触发元素没有设置绝对定位或相对定位,以页面为参考点,如果有,将改变参考坐标系,从触发元素盒子模型的border区域的左上角为参考点<br>也就是当触发元素设置了相对或者绝对定位后,layerX和offsetX就幸福地生活在一起,几乎相等,唯一不同就是一个从border为参考点,一个以内容为参考点,FF从border开始.</p>
+        <p>去年暑假在做百度前端技术学院的界面拖拽功能的时候用到了pageX、offsetX等属性，才发现自己在定位的各种参数的掌握上简直稀碎，因此就系统地整理一下，加深印象。</p>
+<h3 id="1-事件的各种坐标">1.事件的各种坐标</h3><pre><code><span class="keyword">event</span>.clientX    <span class="keyword">event</span>.clientY
+</code></pre><p>鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性</p>
+<pre><code><span class="keyword">event</span>.pageX     <span class="keyword">event</span>.pageY
+</code></pre><p>类似于event.clientX、event.clientY，但它们使用的是文档坐标而非窗口坐标。这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。</p>
+<pre><code><span class="keyword">event</span>.screenX    <span class="keyword">event</span>.screenY
+</code></pre><p>鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性</p>
+<pre><code><span class="keyword">event</span>.offsetX    <span class="keyword">event</span>.offsetY
+</code></pre><p>鼠标相对于事件源元素（srcElement）的X,Y坐标，只有IE事件有这2个属性，标准事件没有对应的属性。<br>IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder,可能出现负值</p>
+<pre><code><span class="keyword">event</span>.layerX    <span class="keyword">event</span>.layerY
+</code></pre><p>FF特有,鼠标相比较于当前坐标系的位置,即如果触发元素没有设置绝对定位或相对定位,以页面为参考点,如果有,将改变参考坐标系,从触发元素盒子模型的border区域的左上角为参考点<br>也就是当触发元素设置了相对或者绝对定位后,layerX和offsetX就幸福地生活在一起,几乎相等,唯一不同就是一个从border为参考点,一个以内容为参考点,FF从border开始.</p>
 <p>只有clientX和screenX 皆大欢喜是W3C标准.其他的,都纠结了.<br>最给力的是,chrome和safari一条龙通杀!完全支持所有属性.其中(offsetX和layerX都是以border为参考点)…</p>
-<h3 id="元素的长宽、距离">元素的长宽、距离</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollHeight	scrollWidth	scrollLeft	scrollTop</span><br></pre></td></tr></table></figure>
-<p>scrollHeight: 获取对象的滚动高度<br>scrollWidth:获取对象的滚动宽度<br>scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离<br>scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">offsetHeight	offsetWidth	offsetLeft	offsetTop</span><br></pre></td></tr></table></figure>
-<p>offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度<br>offsetWidth:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的宽度<br>offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置<br>offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置 </p>
+<h3 id="2-元素的长宽、距离">2.元素的长宽、距离</h3><pre><code><span class="title">scrollHeight</span>    scrollWidth    scrollLeft    scrollTop
+</code></pre><p>scrollHeight: 获取对象的滚动高度<br>scrollWidth:获取对象的滚动宽度<br>scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离<br>scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离</p>
+<pre><code><span class="title">offsetHeight</span>    offsetWidth    offsetLeft    offsetTop
+</code></pre><p>offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度<br>offsetWidth:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的宽度<br>offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置<br>offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置 </p>
 
       
     </div>
@@ -183,7 +183,7 @@ var duoshuoQuery = {short_name:"zhouwy"};
   
   <div class="widget tag">
     <h3 class="title">归档</h3>
-	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">2015年01月</a><span class="archive-list-count">1</span></li></ul>
+	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

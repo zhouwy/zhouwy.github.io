@@ -75,6 +75,366 @@
   <div class="post-content">
     <header>
         <div class="icon"></div>
+        <time datetime="2016-03-09T08:31:21.000Z"><a href="/2016/03/09/Closure/">2016-03-09</a></time>
+        
+  
+    <h1 class="title"><a href="/2016/03/09/Closure/">闭包学习笔记</a></h1>
+  
+
+        
+    </header>
+
+    <div class="entry">
+      
+        <div id="toc" class="toc-article">
+	<div class="toc-title">目录</div>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-定义"><span class="toc-text">1.定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-作用"><span class="toc-text">2.作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-不足"><span class="toc-text">3.不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-应用场景"><span class="toc-text">4.应用场景</span></a></li></ol>
+</div>
+      
+        <p>之前学习闭包的时候，总是感觉懵懵懂懂，每次感觉领悟到了一点，但是遇到复杂一点的马上又晕菜，所以整理出一篇简单的学习笔记，记录一下。                                                  </p>
+<h3 id="1-定义">1.定义</h3><p>  有权访问另一个函数作用域中的变量的函数。</p>
+<h3 id="2-作用">2.作用</h3><p>可以访问函数内部变量<br>保护命名空间，避免污染全局变量<br>可以用于创建私有函数或方法   </p>
+<h3 id="3-不足">3.不足</h3><p>由于浏览器自身的缺陷，使用闭包时候很可能会造成内存泄露现象，这种现象在IE中尤为突出，内存泄露是一个比较严重的问题，轻则会影响浏览器的响应速度，降低用户体验，重则会造成浏览器无响应等现象。</p>
+<p>解决方法：退出函数之前，将不使用的闭包设置为null</p>
+<h3 id="4-应用场景">4.应用场景</h3><p>（1）设置延时或间隔时候的参数传递</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">call_later</span><span class="params">(param1,param2)</span> {</span>
+    return <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+        alert<span class="params">(<span class="string">"param1 is:"</span>+param1+<span class="string">"\n"</span>)</span>;
+        alert<span class="params">(<span class="string">"param2 is:"</span>+param2)</span>;
+    }
+}
+setTimeout<span class="params">(call_later<span class="params">(<span class="string">"dierbaby"</span>,<span class="string">"paulguo"</span>)</span>,<span class="number">5000</span>)</span>;
+setInterval<span class="params">(call_later<span class="params">(<span class="string">"dierbaby"</span>,<span class="string">"paulguo"</span>)</span>,<span class="number">5000</span>)</span>;
+</code></pre><p>（2）实现代码的封装和模块化，实现私有变量</p>
+<pre><code>var <span class="keyword">person</span>=function() {
+    var _name=<span class="string">"default"</span>;
+    return {
+        getName:function() {
+            return _name;
+        },
+        setName:function(newName) {
+            _name=newName;
+        }
+    }
+}();
+
+alert(<span class="keyword">person</span>._name);//undefined
+alert(<span class="keyword">person</span>.getName());//default
+<span class="keyword">person</span>.setName(<span class="string">"dierbaby"</span>);
+alert(<span class="keyword">person</span>.getName());//dierbaby
+</code></pre><p>（3）循环中创建闭包</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">bind_alert</span>(<span class="params">i</span>) </span>{
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+        alert(i);
+    }
+}
+
+(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="keyword">var</span> target=<span class="built_in">document</span>.getElementsByTagName(<span class="string">"li"</span>);
+    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;target.length;i++) {
+        <span class="comment">//target[i].attachEvent('onclick',alert(i));</span>
+        target[i].attachEvent(<span class="string">'onclick'</span>,bind_alert(i));
+    }
+})();
+</code></pre>
+      
+    </div>
+    <footer>
+<!--        -->
+        
+        
+        <div class="alignright">
+          <a href="/2016/03/09/Closure/#comment" class="comment-link">Comments</a>
+        </div>
+        
+<!--        -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+<section id="relate">
+	<script type="text/javascript" id="wumiiRelatedItems"></script>
+	<script type="text/javascript">
+	    var wumiiPermaLink = "undefined"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "undefined"; //请用代码生成文章标题
+	    var wumiiTags = "undefined"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+	    var wumiiCategories = "undefined"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
+	    var wumiiSitePrefix = "Your site url";
+	    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
+	</script>
+	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+	<a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+	    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+	</a>
+</section>
+
+
+
+
+
+    	
+
+	
+    		<article class="post">
+  
+  <div class="post-content">
+    <header>
+        <div class="icon"></div>
+        <time datetime="2016-03-09T05:44:34.000Z"><a href="/2016/03/09/Asynchronous-Script-Loading/">2016-03-09</a></time>
+        
+  
+    <h1 class="title"><a href="/2016/03/09/Asynchronous-Script-Loading/">异步加载和延迟加载</a></h1>
+  
+
+        
+    </header>
+
+    <div class="entry">
+      
+        <div id="toc" class="toc-article">
+	<div class="toc-title">目录</div>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-同步加载"><span class="toc-text">1.同步加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-异步加载"><span class="toc-text">2.异步加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1_实现方法："><span class="toc-text">2.1 实现方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2_问题："><span class="toc-text">2.2 问题：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-延迟加载"><span class="toc-text">3.延迟加载</span></a></li></ol>
+</div>
+      
+        <h3 id="1-同步加载">1.同步加载</h3><p>同步模式，又称阻塞模式，会阻止浏览器的后续处理，停止了后续的解析，因此停止了后续的文件加载（如图像）、渲染、代码执行。<br> js 之所以要同步执行，是因为 js 中可能有输出 document 内容、修改dom、重定向等行为，所以默认同步执行才是安全的。<br>以前的一般建议是把<code>&lt;script</code>&gt;放在页面末尾<code>&lt;/body&gt;</code>之前，这样尽可能减少这种阻塞行为，而先让页面展示出来。</p>
+<h3 id="2-异步加载">2.异步加载</h3><p>异步加载又叫非阻塞，浏览器在下载执行 js 同时，还会继续进行后续页面的处理。</p>
+<h4 id="2-1_实现方法：">2.1 实现方法：</h4><p>（常见方法和jquery实现defered对象）</p>
+<p>（1）  动态创建<code>&lt;script&gt;</code>标签并插入到document中<br>任何以添加 script 节点(例如 appendChild(scriptNode) ) 的方式引入的js文件都是异步执行的 (scriptNode 需要插入document中，只创建节点和设置 src 是不会加载 js 文件的，这跟 img 的预加载不能类比 ) </p>
+<pre><code>var script = document.createElement<span class="params">(<span class="string">"script"</span>)</span>; 
+script.setAttribute<span class="params">(<span class="string">"src"</span>,<span class="string">"xx.js"</span>)</span>; 
+documenrt.getElementsByTagName<span class="params">(<span class="string">"head"</span>)</span>[<span class="number">0</span>].appendChild<span class="params">(script)</span>; 
+</code></pre><p>（2） defer属性<br>defer属性声明这个脚本中将不会有 document.write 或 dom 修改。<br>浏览器将会并行下载 file.js 和其它有 defer 属性的script，而不会阻塞页面后续处理。<br>执行要在所有元素解析完成之后，DOMContentLoaded 事件触发之前完成。<br>defer属性在IE 4.0中就实现了，超过13年了！Firefox 从 3.5 开始支持defer属性 。<br>注：所有的defer 脚本保证是按顺序依次执行的。</p>
+<p>（3）  async属性<br>async属性是HTML5新增的。作用和defer类似，但是它将在下载后尽快执行，不能保证脚本会按顺序执行。它们将在onload 事件之前完成。<br>Firefox 3.6、Opera 10.5、IE 9 和 最新的Chrome 和 Safari 都支持 async 属性。可以同时使用 async 和 defer，这样IE 4之后的所有 IE 都支持异步加载。</p>
+<blockquote><br><img src="\assets\img\post\deferAndAsync.jpg" alt="defer和async属性的比较"><br>蓝色线代表网络读取，红色线代表执行时间，这俩都是针对脚本的；绿色线代表 HTML 解析。<br><br>此图告诉我们以下几个要点：<br><br>1.defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）<br>2.它俩的差别在于脚本下载完之后何时执行，显然 defer 是最接近我们对于应用脚本加载和执行的要求的<br>3.关于 defer，此图未尽之处在于它是按照加载顺序执行脚本的，这一点要善加利用<br>4.async 则是一个乱序执行的主，反正对它来说脚本的加载和执行是紧紧挨着的，所以不管你声明的顺序如何，只要它加载完了就会立刻执行<br>5.仔细想想，async 对于应用脚本的用处不大，因为它完全不考虑依赖（哪怕是最低级的顺序执行），不过它对于那些可以不依赖任何脚本或不被任何脚本依赖的脚本来说却是非常合适的，最典型的例子：Google Analytics<br><a href="https://segmentfault.com/q/1010000000640869" target="_blank" rel="external">参考链接：defer和async的区别</a><br></blockquote>
+
+<p>（4）  创建并插入一个iframe元素，让其异步执行 js 。</p>
+<pre><code><span class="reserved">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>); 
+<span class="built_in">document</span>.body.appendChild(iframe); 
+<span class="reserved">var</span> doc = iframe.contentWindow.<span class="built_in">document</span>; 
+doc.open().write(<span class="string">'&lt;body onload="insertJS()"&gt;'</span>); 
+doc.close();
+</code></pre><p>（5）  通过 ajax 获取js的内容，然后 eval 执行。</p>
+<pre><code><span class="keyword">var</span> xhrObj = getXHRObject(); 
+ xhrObj.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{  
+    <span class="keyword">if</span> ( xhrObj.readyState != <span class="number">4</span> ) <span class="keyword">return</span>; 
+    <span class="built_in">eval</span>(xhrObj.responseText); 
+}; 
+xhrObj.open(<span class="string">'GET'</span>, <span class="string">'A.js'</span>, <span class="literal">true</span>); 
+xhrObj.send(<span class="string">''</span>);
+</code></pre><p>（6）  jQuery实现：defered对象</p>
+<h4 id="2-2_问题：">2.2 问题：</h4><h3 id="3-延迟加载">3.延迟加载</h3><p>延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的。延迟加载就是一开始并不加载这些暂时不用的js，而是在需要的时候或稍后再通过js 的控制来异步加载。<br>也就是将 js 切分成许多模块，页面初始化时只加载需要立即执行的 js ，然后其它 js 的加载延迟到第一次需要用到的时候再加载。<br>特别是页面有大量不同的模块组成，很多可能暂时不用或根本就没用到。<br>就像图片的延迟加载，在图片出现在可视区域内时（在滚动条下拉）才加载显示图片。</p>
+
+      
+    </div>
+    <footer>
+<!--        -->
+        
+        
+        <div class="alignright">
+          <a href="/2016/03/09/Asynchronous-Script-Loading/#comment" class="comment-link">Comments</a>
+        </div>
+        
+<!--        -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+<section id="relate">
+	<script type="text/javascript" id="wumiiRelatedItems"></script>
+	<script type="text/javascript">
+	    var wumiiPermaLink = "undefined"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "undefined"; //请用代码生成文章标题
+	    var wumiiTags = "undefined"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+	    var wumiiCategories = "undefined"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
+	    var wumiiSitePrefix = "Your site url";
+	    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
+	</script>
+	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+	<a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+	    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+	</a>
+</section>
+
+
+
+
+
+    	
+
+	
+    		<article class="post">
+  
+  <div class="post-content">
+    <header>
+        <div class="icon"></div>
+        <time datetime="2016-03-06T14:39:56.000Z"><a href="/2016/03/06/cross-origin/">2016-03-06</a></time>
+        
+  
+    <h1 class="title"><a href="/2016/03/06/cross-origin/">跨域的三种方法</a></h1>
+  
+
+        
+    </header>
+
+    <div class="entry">
+      
+        <div id="toc" class="toc-article">
+	<div class="toc-title">目录</div>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-跨源资源共享"><span class="toc-text">1.跨源资源共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JSONP"><span class="toc-text">2.JSONP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Web_Sockets"><span class="toc-text">3.Web Sockets</span></a></li></ol>
+</div>
+      
+        <p>由于Ajax受同源策略的限制，因此，要实现跨域的资源访问，需要采取其他的方法。<br>只要是协议、域名、端口有任何一个不同，都被当成是不同的域。<br>我主要整理了三个比较常见的跨域方法。</p>
+<h3 id="1-跨源资源共享">1.跨源资源共享</h3><p>原理：使用自定义的HTTP头部让浏览器与服务器进行沟通。发送Request附加Origin头部，以便服务器根据这个头部信息来决定是否给予响应。如果服务器认为这个请求可以接受，就在Access-Control-Allow-Origin头部回发相同的源信息。</p>
+<p>通过 onload  onerror等事件来接收响应<br>具体实现：</p>
+<pre><code>function createCORSRequest(<span class="keyword">method</span>, url) {
+  <span class="keyword">var</span> xhr = new <span class="type">XMLHttpRequest</span>();
+  <span class="keyword">if</span> (<span class="string">"withCredentials"</span> <span class="keyword">in</span> xhr) {
+    // 此时即支持<span class="type">CORS</span>的情况
+    // 检查<span class="type">XMLHttpRequest</span>对象是否有“withCredentials”属性
+    // “withCredentials”仅存在于<span class="type">XMLHTTPRequest2</span>对象里
+    xhr.open(<span class="keyword">method</span>, url, <span class="literal">true</span>);
+
+  } <span class="keyword">else</span> <span class="keyword">if</span> (typeof!= <span class="string">"undefined"</span>) {
+
+    // 否则检查是否支持<span class="type">XDomainRequest</span>，<span class="type">IE8</span>和<span class="type">IE9</span>支持
+    // <span class="type">XDomainRequest</span>仅存在于<span class="type">IE</span>中，是<span class="type">IE</span>用于支持<span class="type">CORS</span>请求的方式
+    xhr = new <span class="type">XDomainRequest</span>();
+    xhr.open(<span class="keyword">method</span>, url);
+
+  } <span class="keyword">else</span> {
+
+    // 否则，浏览器不支持<span class="type">CORS</span>
+    xhr = null;
+
+  }
+  <span class="keyword">return</span> xhr;
+}
+
+<span class="keyword">var</span> xhr = createCORSRequest('<span class="type">GET</span>', url);
+<span class="keyword">if</span> (!xhr) {
+  throw new <span class="type">Error</span>('<span class="type">CORS</span> <span class="keyword">not</span> supported');
+}
+</code></pre><p>优点：有好的错误处理方法，同时支持各种类型的HTTP请求</p>
+<p>缺点：老的浏览器不支持</p>
+<h3 id="2-JSONP">2.JSONP</h3><p>原理：<code>&lt;script&gt;</code>元素有能力不受限制地从其他域加载资源<br>首先在客户端注册一个callback, 然后把callback的名字传给服务器。<br>此时，服务器先生成 json 数据。<br>然后以 javascript 语法的方式，生成一个function , function 名字就是传递上来的参数 jsonp.<br>最后将 json 数据直接以入参的方式，放置到 function 中，这样就生成了一段 js 语法的文档，返回给客户端。<br>客户端浏览器，解析script标签，并执行返回的 javascript 文档，此时数据作为参数，传入到了客户端预先定义好的 callback 函数里.（动态执行回调函数）</p>
+<p>优点：<br>1.不受同源策略的限制<br>2.兼容性好，在很多古老的浏览器也可以实现</p>
+<p>缺点：<br>1.没有关于 JSONP 调用的错误处理。如果动态脚本插入有效，就执行调用；如果无效，就静默失败<br>2.被不信任的服务使用时会很危险。因为 JSONP 服务返回打包在函数调用中的 JSON 响应，而函数调用是由浏览器执行的，这使宿主 Web 应用程序更容易受到各类攻击。<br>3.只能实现GET请求</p>
+<h3 id="3-Web_Sockets">3.Web Sockets</h3><p>原理：WebSocket API是下一代客户端-服务器的异步通信方法。该通信取代了单个的TCP套接字，使用ws或wss协议，可用于任意的客户端和服务器程序。WebSocket目前由W3C进行标准化。WebSocket已经受到Firefox 4、Chrome 4、Opera 10.70以及Safari 5等浏览器的支持。</p>
+<p>WebSocket API最伟大之处在于服务器和客户端可以在给定的时间范围内的任意时刻，相互推送信息。WebSocket并不限于以Ajax(或XHR)方式通信，因为Ajax技术需要客户端发起请求，而WebSocket服务器和客户端可以彼此相互推送信息；XHR受到域的限制，而WebSocket允许跨域通信。</p>
+<p>优点：能够与服务器进行全双工、双向通信。</p>
+
+      
+    </div>
+    <footer>
+<!--        -->
+        
+        
+        <div class="alignright">
+          <a href="/2016/03/06/cross-origin/#comment" class="comment-link">Comments</a>
+        </div>
+        
+<!--        -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+<section id="relate">
+	<script type="text/javascript" id="wumiiRelatedItems"></script>
+	<script type="text/javascript">
+	    var wumiiPermaLink = "undefined"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "undefined"; //请用代码生成文章标题
+	    var wumiiTags = "undefined"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+	    var wumiiCategories = "undefined"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
+	    var wumiiSitePrefix = "Your site url";
+	    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
+	</script>
+	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+	<a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+	    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+	</a>
+</section>
+
+
+
+
+
+    	
+
+	
+    		<article class="post">
+  
+  <div class="post-content">
+    <header>
+        <div class="icon"></div>
+        <time datetime="2016-03-04T14:41:29.000Z"><a href="/2016/03/04/Sorting-algorithm/">2016-03-04</a></time>
+        
+  
+    <h1 class="title"><a href="/2016/03/04/Sorting-algorithm/">各种排序算法的JS实现</a></h1>
+  
+
+        
+    </header>
+
+    <div class="entry">
+      
+        <div id="toc" class="toc-article">
+	<div class="toc-title">目录</div>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#冒泡排序"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速排序"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单选择排序"><span class="toc-text">简单选择排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单选择排序-1"><span class="toc-text">简单选择排序</span></a></li></ol>
+</div>
+      
+        <h3 id="冒泡排序">冒泡排序</h3><p>基本思想：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="快速排序">快速排序</h3><p>基本思想：</p>
+<h3 id="简单选择排序">简单选择排序</h3><p>基本思想：</p>
+<h3 id="简单选择排序-1">简单选择排序</h3><p>基本思想：</p>
+
+      
+    </div>
+    <footer>
+<!--        -->
+        
+        
+        <div class="alignright">
+          <a href="/2016/03/04/Sorting-algorithm/#comment" class="comment-link">Comments</a>
+        </div>
+        
+<!--        -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+<section id="relate">
+	<script type="text/javascript" id="wumiiRelatedItems"></script>
+	<script type="text/javascript">
+	    var wumiiPermaLink = "undefined"; //请用代码生成文章永久的链接
+	    var wumiiTitle = "undefined"; //请用代码生成文章标题
+	    var wumiiTags = "undefined"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
+	    var wumiiCategories = "undefined"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
+	    var wumiiSitePrefix = "Your site url";
+	    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
+	</script>
+	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
+	<a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
+	    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
+	</a>
+</section>
+
+
+
+
+
+    	
+
+	
+    		<article class="post">
+  
+  <div class="post-content">
+    <header>
+        <div class="icon"></div>
         <time datetime="2016-03-03T14:02:21.000Z"><a href="/2016/03/03/precise-positioning/">2016-03-03</a></time>
         
   
@@ -88,24 +448,25 @@
       
         <div id="toc" class="toc-article">
 	<div class="toc-title">目录</div>
-	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#事件的各种坐标"><span class="toc-text">事件的各种坐标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的长宽、距离"><span class="toc-text">元素的长宽、距离</span></a></li></ol>
+	<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-事件的各种坐标"><span class="toc-text">1.事件的各种坐标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-元素的长宽、距离"><span class="toc-text">2.元素的长宽、距离</span></a></li></ol>
 </div>
       
-        <h3 id="事件的各种坐标">事件的各种坐标</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.clientX	event.clientY</span><br></pre></td></tr></table></figure>
-<p>鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.pageX 	event.pageY</span><br></pre></td></tr></table></figure>
-<p>类似于event.clientX、event.clientY，但它们使用的是文档坐标而非窗口坐标。这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.screenX	event.screenY</span><br></pre></td></tr></table></figure>
-<p>鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.offsetX	event.offsetY</span><br></pre></td></tr></table></figure>
-<p>鼠标相对于事件源元素（srcElement）的X,Y坐标，只有IE事件有这2个属性，标准事件没有对应的属性。<br>IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder,可能出现负值</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event.layerX	event.layerY</span><br></pre></td></tr></table></figure>
-<p>FF特有,鼠标相比较于当前坐标系的位置,即如果触发元素没有设置绝对定位或相对定位,以页面为参考点,如果有,将改变参考坐标系,从触发元素盒子模型的border区域的左上角为参考点<br>也就是当触发元素设置了相对或者绝对定位后,layerX和offsetX就幸福地生活在一起,几乎相等,唯一不同就是一个从border为参考点,一个以内容为参考点,FF从border开始.</p>
+        <p>去年暑假在做百度前端技术学院的界面拖拽功能的时候用到了pageX、offsetX等属性，才发现自己在定位的各种参数的掌握上简直稀碎，因此就系统地整理一下，加深印象。</p>
+<h3 id="1-事件的各种坐标">1.事件的各种坐标</h3><pre><code><span class="keyword">event</span>.clientX    <span class="keyword">event</span>.clientY
+</code></pre><p>鼠标相对于浏览器窗口可视区域的X，Y坐标（窗口坐标），可视区域不包括工具栏和滚动条。IE事件和标准事件都定义了这2个属性</p>
+<pre><code><span class="keyword">event</span>.pageX     <span class="keyword">event</span>.pageY
+</code></pre><p>类似于event.clientX、event.clientY，但它们使用的是文档坐标而非窗口坐标。这2个属性不是标准属性，但得到了广泛支持。IE事件中没有这2个属性。</p>
+<pre><code><span class="keyword">event</span>.screenX    <span class="keyword">event</span>.screenY
+</code></pre><p>鼠标相对于用户显示器屏幕左上角的X,Y坐标。标准事件和IE事件都定义了这2个属性</p>
+<pre><code><span class="keyword">event</span>.offsetX    <span class="keyword">event</span>.offsetY
+</code></pre><p>鼠标相对于事件源元素（srcElement）的X,Y坐标，只有IE事件有这2个属性，标准事件没有对应的属性。<br>IE特有,鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域的左上角为参考点,如果有boder,可能出现负值</p>
+<pre><code><span class="keyword">event</span>.layerX    <span class="keyword">event</span>.layerY
+</code></pre><p>FF特有,鼠标相比较于当前坐标系的位置,即如果触发元素没有设置绝对定位或相对定位,以页面为参考点,如果有,将改变参考坐标系,从触发元素盒子模型的border区域的左上角为参考点<br>也就是当触发元素设置了相对或者绝对定位后,layerX和offsetX就幸福地生活在一起,几乎相等,唯一不同就是一个从border为参考点,一个以内容为参考点,FF从border开始.</p>
 <p>只有clientX和screenX 皆大欢喜是W3C标准.其他的,都纠结了.<br>最给力的是,chrome和safari一条龙通杀!完全支持所有属性.其中(offsetX和layerX都是以border为参考点)…</p>
-<h3 id="元素的长宽、距离">元素的长宽、距离</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollHeight	scrollWidth	scrollLeft	scrollTop</span><br></pre></td></tr></table></figure>
-<p>scrollHeight: 获取对象的滚动高度<br>scrollWidth:获取对象的滚动宽度<br>scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离<br>scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">offsetHeight	offsetWidth	offsetLeft	offsetTop</span><br></pre></td></tr></table></figure>
-<p>offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度<br>offsetWidth:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的宽度<br>offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置<br>offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置 </p>
+<h3 id="2-元素的长宽、距离">2.元素的长宽、距离</h3><pre><code><span class="title">scrollHeight</span>    scrollWidth    scrollLeft    scrollTop
+</code></pre><p>scrollHeight: 获取对象的滚动高度<br>scrollWidth:获取对象的滚动宽度<br>scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离<br>scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离</p>
+<pre><code><span class="title">offsetHeight</span>    offsetWidth    offsetLeft    offsetTop
+</code></pre><p>offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度<br>offsetWidth:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的宽度<br>offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置<br>offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置 </p>
 
       
     </div>
@@ -214,67 +575,6 @@
 
 
     	
-
-	
-    		<article class="post">
-  
-  <div class="post-content">
-    <header>
-        <div class="icon"></div>
-        <time datetime="2015-01-08T10:41:14.000Z"><a href="/2015/01/08/test/">2015-01-08</a></time>
-        
-  
-    <h1 class="title"><a href="/2015/01/08/test/">test</a></h1>
-  
-
-        
-    </header>
-
-    <div class="entry">
-      
-        <div id="toc" class="toc-article">
-	<div class="toc-title">目录</div>
-	
-</div>
-      
-        
-      
-    </div>
-    <footer>
-<!--        -->
-        
-        
-        <div class="alignright">
-          <a href="/2015/01/08/test/#comment" class="comment-link">Comments</a>
-        </div>
-        
-<!--        -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-<section id="relate">
-	<script type="text/javascript" id="wumiiRelatedItems"></script>
-	<script type="text/javascript">
-	    var wumiiPermaLink = "undefined"; //请用代码生成文章永久的链接
-	    var wumiiTitle = "undefined"; //请用代码生成文章标题
-	    var wumiiTags = "undefined"; //请用代码生成文章标签，以英文逗号分隔，如："标签1,标签2"
-	    var wumiiCategories = "undefined"; //请用代码生成文章分类，分类名放在 JSONArray 	中，如: ["分类1", "分类2"]
-	    var wumiiSitePrefix = "Your site url";
-	    var wumiiParams = "&num=6&mode=3&pf=JAVASCRIPT";
-	</script>
-	<script type="text/javascript" src="http://widget.wumii.cn/ext/relatedItemsWidget"></script>
-	<a href="http://www.wumii.com/widget/relatedItems" style="border:0;">
-	    <img src="http://static.wumii.cn/images/pixel.png" alt="无觅关联推荐，快速提升流量" style="border:0;padding:0;margin:0;" />
-	</a>
-</section>
-
-
-
-
-
-    	
  
 <nav id="pagination">
   
@@ -289,7 +589,7 @@
   
   <div class="widget tag">
     <h3 class="title">归档</h3>
-	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">2015年01月</a><span class="archive-list-count">1</span></li></ul>
+	<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">2016年03月</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">2015年07月</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

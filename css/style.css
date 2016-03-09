@@ -1306,6 +1306,12 @@ pre .deletion {
   column-width: 30%;
   -webkit-column-width: 28%;
 }
+.gallery .gallery-set:after {
+  content: ".";
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+}
 .gallery .gallery-set .item {
   margin-bottom: 30px;
   margin-right: 6px;
@@ -1316,13 +1322,7 @@ pre .deletion {
 .gallery .gallery-set .item:hover {
   height: auto;
 }
-.gallery .gallery-set .item:hover img {
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
-}
+.gallery .gallery-set .item:hover img,
 .gallery .gallery-set .item:hover .dd {
   display: block;
 }
