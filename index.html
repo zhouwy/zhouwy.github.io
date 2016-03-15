@@ -296,7 +296,7 @@ xhrObj.send(<span class="string">''</span>);
     // “withCredentials”仅存在于<span class="type">XMLHTTPRequest2</span>对象里
     xhr.open(<span class="keyword">method</span>, url, <span class="literal">true</span>);
 
-  } <span class="keyword">else</span> <span class="keyword">if</span> (typeof xhr!= <span class="string">"undefined"</span>) {
+  } <span class="keyword">else</span> <span class="keyword">if</span> (typeof <span class="type">XDomainRequest</span> != <span class="string">"undefined"</span>) {
 
     // 否则检查是否支持<span class="type">XDomainRequest</span>，<span class="type">IE8</span>和<span class="type">IE9</span>支持
     // <span class="type">XDomainRequest</span>仅存在于<span class="type">IE</span>中，是<span class="type">IE</span>用于支持<span class="type">CORS</span>请求的方式
