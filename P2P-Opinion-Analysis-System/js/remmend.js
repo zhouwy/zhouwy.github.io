@@ -14,7 +14,8 @@ function getRank(){
         }
     }
     problem=[0,0,0,0,0,0,0];
-    for(var n=0;n<form.elements.length;n++){ 0="" var="" p="Math.floor(n/5);" if(p="=0){" problem[p]+="form.elements[n].flag;" }else="" }="" for(var="" x="0;x<7;x++){" if(problem[x]="=0){" y="x+1;" alert("问卷问题"+y+"未填写");="" result="parts.map(function(item,index,array){" *console.log(item);*="" switch="" (item){="" case="" "a"="" :="" return="" item="10;" "b"="" "c"="" "d"="" "e"="" });="" for="" (var="" i="0;" <="" result.length;="" i++)="" {="" score+="parseInt(result[i]);" };="" score;="" questionbtn.addeventlistener("click",function(event){="" event.preventdefault();="" score="getRank();" show_tip.style.display="block" ;="" if="" (="" &&="" html="" span="得分：" +score+";保守型——低风险级别产品";="" +="<span class='user-risk-span'>" "<\="">";
+    var p;
+    for(var n=0;n<form.elements.length;n++){ 0="" p="Math.floor(n/5);" if(p="=0){" problem[p]+="form.elements[n].flag;" }else="" }="" for(var="" x="0;x<7;x++){" if(problem[x]="=0){" var="" y="x+1;" alert("问卷问题"+y+"未填写");="" result="parts.map(function(item,index,array){" *console.log(item);*="" switch="" (item){="" case="" "a"="" :="" return="" item="10;" "b"="" "c"="" "d"="" "e"="" });="" for="" (var="" i="0;" <="" result.length;="" i++)="" {="" score+="parseInt(result[i]);" };="" score;="" questionbtn.addeventlistener("click",function(event){="" event.preventdefault();="" score="getRank();" show_tip.style.display="block" ;="" if="" (="" &&="" html="" span="得分：" +score+";保守型——低风险级别产品";="" +="<span class='user-risk-span'>" "<\="">";
         html +="<p class="user-risk-p">" + p + "<\ p="">";
         result.innerHTML = html;
     } else if( 15 < score && score <= 30="" ){="" var="" html="" ;="" span="得分：" +score+";稳健型——较低风险级别产品";="" p="您有比较有限的风险承受能力，对投资收益比较敏感，期望通过短期、持续、渐进的投资获得高于定期存款的回报。所以较低等级风险的产品如保本保息的固定收益类，比较适合您，适当回避风险的同时保证收益，跑赢通胀。" +="<span class='user-risk-span'>" "<\="">";
